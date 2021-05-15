@@ -24,8 +24,9 @@
 /**********************************************
   Edit Settings.h for personalization
 ***********************************************/
-
+#include <Arduino.h>
 #include "Settings.h"
+#include "Adafruit_I2CDevice.h"
 
 #define VERSION "2.16"
 
@@ -47,6 +48,48 @@
 //declairing prototypes
 void configModeCallback (WiFiManager *myWiFiManager);
 int8_t getWifiQuality();
+void readCityIds();
+void centerPrint(String msg, boolean extraStuff);
+void centerPrint(String msg);
+void displayWeatherData();
+void handlePull();
+void handleLocations();
+void handleSaveBitcoin();
+void handleSaveNews();
+void handleSaveOctoprint();
+void handleSavePihole();
+void handleSystemReset();
+void handleBitcoinConfigure();
+void handleWideClockConfigure();
+void handleNewsConfigure();
+void handleOctoprintConfigure();
+void handleDisplay();
+void redirectHome();
+void scrollMessage(String msg);
+void flashLED(int number, int delayTime);
+int getMinutesFromLastRefresh() ;
+void getWeatherData();
+void checkDisplay();
+String getTempSymbol();
+String getSpeedSymbol();
+String getPressureSymbol();
+void drawPiholeGraph();
+String hourMinutes(boolean isRefresh);
+String secondsIndicator(boolean isRefresh);
+void displayWeatherData();
+void redirectHome();
+String writeCityIds();
+String decodeHtmlString(String msg) ;
+void sendHeader();
+void sendFooter();
+void enableDisplay(boolean enable);
+void displayMessage(String message);
+String getTimeTillUpdate();
+void handleSaveWideClock();
+void handleForgetWifi();
+void restartEsp();
+void handleConfigure();
+void handlePiholeConfigure();
 
 // LED Settings
 const int offset = 1;
@@ -415,15 +458,15 @@ void loop() {
       msg += marqueeMessage + " ";
       
       if (NEWS_ENABLED) {
-        msg += "  " + NEWS_SOURCE + ": " + newsClient.getTitle(newsIndex) + "  ";
+        msg += "  NEWS: " + newsClient.getTitle(newsIndex) + "  ";
         newsIndex += 1;
         if (newsIndex > 9) {
           newsIndex = 0;
         }
       }
       if (OCTOPRINT_ENABLED && printerClient.isPrinting()) {
-        msg += "  " + printerClient.getFileName() + " ";
-        msg += "(" + printerClient.getProgressCompletion() + "%)  ";
+        msg += "  OctoPrint: Time Left - " + printerClient.getProgressPrintTimeLeft();
+        msg += " (" + printerClient.getProgressCompletion() + "%)  ";
       }
       if (BitcoinCurrencyCode != "NONE" && BitcoinCurrencyCode != "") {
         msg += "  Bitcoin: " + bitcoinClient.getRate() + " " + bitcoinClient.getCode() + " ";

@@ -1,0 +1,49 @@
+#include "Helper.h"
+#include <Arduino.h>
+
+
+String cleanText(String text) {
+  text.replace("’", "'");
+  text.replace("“", "\"");
+  text.replace("”", "\"");
+  text.replace("`", "'");
+  text.replace("‘", "'");
+  text.replace("„", "'");
+  text.replace("\\\"", "'");
+  text.replace("•", "-");
+  text.replace("é", "e");
+  text.replace("è", "e");
+  text.replace("ë", "e");
+  text.replace("ê", "e");
+  text.replace("à", "a");
+  text.replace("â", "a");
+  text.replace("ù", "u");
+  text.replace("ç", "c");
+  text.replace("î", "i");
+  text.replace("ï", "i");
+  text.replace("ô", "o");
+  text.replace("…", "...");
+  text.replace("–", "-");
+  text.replace("Â", "A");
+  text.replace("À", "A");
+  text.replace("æ", "ae");
+  text.replace("Æ", "AE");
+  text.replace("É", "E");
+  text.replace("È", "E");
+  text.replace("Ë", "E");
+  text.replace("Ô", "O");
+  text.replace("Ö", "Oe");
+  text.replace("ö", "oe");
+  text.replace("œ", "oe");
+  text.replace("Œ", "OE");
+  text.replace("Ù", "U");
+  text.replace("Û", "U");
+  text.replace("Ü", "Ue");
+  text.replace("ü", "ue");
+  text.replace("Ä", "Ae");
+  text.replace("ä", "ae");
+  text.replace("ß", "ss");
+  text.replace("»", "'");
+  text.replace("«", "'");
+  return text;
+}

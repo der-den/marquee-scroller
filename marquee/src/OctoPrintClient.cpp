@@ -190,7 +190,11 @@ String OctoPrintClient::getProgressPrintTime() {
 }
 
 String OctoPrintClient::getProgressPrintTimeLeft() {
-  return printerData.progressPrintTimeLeft;
+  if ( printerData.progressPrintTimeLeft.toInt() / 60 / 60> 1)
+  {
+    return String((printerData.progressPrintTimeLeft.toDouble() / 60 / 60 ), 2) + " Std." ;
+  }
+  return String(printerData.progressPrintTimeLeft.toDouble() / 60, 0 ) + " Min.";
 }
 
 String OctoPrintClient::getState() {

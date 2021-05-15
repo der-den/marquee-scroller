@@ -42,7 +42,7 @@ void NewsApiClient::updateNews() {
   parser.setListener(this);
   HTTPClient http;
 
-  String apiGetData = "http://" + String(servername) + "/v2/top-headlines?sources=" + mySource + "&apiKey=" + myApiKey;
+  String apiGetData = "http://" + String(servername) + "/v2/top-headlines?country=de&apiKey=" + myApiKey;
 
   Serial.println("Getting News Data");
   Serial.println(apiGetData);
@@ -188,5 +188,6 @@ String NewsApiClient::cleanText(String text) {
   text.replace("ß", "ss");
   text.replace("»", "'");
   text.replace("«", "'");
+  text.replace("€", "EUR");
   return text;
 }

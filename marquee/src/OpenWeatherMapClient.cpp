@@ -23,6 +23,8 @@ SOFTWARE.
 
 #include "OpenWeatherMapClient.h"
 #include "math.h"
+#include "Helper.h"
+
 
 OpenWeatherMapClient::OpenWeatherMapClient(String ApiKey, int CityIDs[], int cityCount, boolean isMetric) {
   updateCityIdList(CityIDs, cityCount);
@@ -36,7 +38,7 @@ void OpenWeatherMapClient::updateWeatherApiKey(String ApiKey) {
 
 void OpenWeatherMapClient::updateWeather() {
   WiFiClient weatherClient;
-  String apiGetData = "GET /data/2.5/group?id=" + myCityIDs + "&units=" + units + "&cnt=1&APPID=" + myApiKey + " HTTP/1.1";
+  String apiGetData = "GET /data/2.5/group?id=" + myCityIDs + "&units=" + units + "&cnt=1&APPID=" + myApiKey + "&lang=de HTTP/1.1";
 
   Serial.println("Getting Weather Data");
   Serial.println(apiGetData);
@@ -104,14 +106,15 @@ void OpenWeatherMapClient::updateWeather() {
     weathers[inx].lat = (const char*)root["list"][inx]["coord"]["lat"];
     weathers[inx].lon = (const char*)root["list"][inx]["coord"]["lon"];
     weathers[inx].dt = (const char*)root["list"][inx]["dt"];
-    weathers[inx].city = (const char*)root["list"][inx]["name"];
+    //weathers[inx].city = (const char*)(cleanText(root["list"][inx]["name"])).c_str;
+    weathers[inx].city = cleanText(root["list"][inx]["name"]);
     weathers[inx].country = (const char*)root["list"][inx]["sys"]["country"];
     weathers[inx].temp = (const char*)root["list"][inx]["main"]["temp"];
     weathers[inx].humidity = (const char*)root["list"][inx]["main"]["humidity"];
-    weathers[inx].condition = (const char*)root["list"][inx]["weather"][0]["main"];
+    weathers[inx].condition = cleanText(root["list"][inx]["weather"][0]["main"]);
     weathers[inx].wind = (const char*)root["list"][inx]["wind"]["speed"];
     weathers[inx].weatherId = (const char*)root["list"][inx]["weather"][0]["id"];
-    weathers[inx].description = (const char*)root["list"][inx]["weather"][0]["description"];
+    weathers[inx].description = cleanText(root["list"][inx]["weather"][0]["description"]);
     weathers[inx].icon = (const char*)root["list"][inx]["weather"][0]["icon"];
     weathers[inx].pressure = (const char*)root["list"][inx]["main"]["pressure"];
     weathers[inx].direction = (const char*)root["list"][inx]["wind"]["deg"];
@@ -392,3 +395,5 @@ String OpenWeatherMapClient::getWeatherIcon(int index) {
   }
   return W;
 }
+
+
