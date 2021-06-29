@@ -385,7 +385,7 @@ void setup() {
 }
 
 //************************************************************
-// Main Looop
+// Main Loop
 //************************************************************
 void loop() {
   //Get some Weather Data to serve
@@ -517,7 +517,7 @@ void loop() {
 
 String hourMinutes(boolean isRefresh) {
   if (IS_24HOUR) {
-    return hour() + secondsIndicator(isRefresh) + TimeDB.zeroPad(minute());
+    return TimeDB.zeroPad(hour()) + secondsIndicator(isRefresh) + TimeDB.zeroPad(minute());
   } else {
     return hourFormat12() + secondsIndicator(isRefresh) + TimeDB.zeroPad(minute());
   }
