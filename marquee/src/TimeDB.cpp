@@ -39,7 +39,7 @@ time_t TimeDB::getTime()
 {
   WiFiClient client;
   String apiGetData = "GET /v2.1/get-time-zone?key=" + myApiKey + "&format=json&by=position&lat=" + myLat + "&lng=" + myLon + " HTTP/1.1";
-  Serial.println("Getting Time Data for " + myLat + "," + myLon);
+  Serial.println("Getting Time Data for Lat: " + myLat + ", Lon: " + myLon);
   Serial.println(apiGetData);
   String result = "";
   if (client.connect(servername, 80)) {  //starts client connection, checks for connection
