@@ -40,13 +40,16 @@ void NewsApiClient::updateNewsClient(String ApiKey, String NewsSource) {
 void NewsApiClient::updateNews() {
   JsonStreamingParser parser;
   parser.setListener(this);
+  WiFiClient client;
   HTTPClient http;
+  
 
   String apiGetData = "http://" + String(servername) + "/v2/top-headlines?country=de&apiKey=" + myApiKey;
 
   Serial.println("Getting News Data");
   Serial.println(apiGetData);
-  http.begin(apiGetData);
+  http.begin(client, apiGetData);
+
   int httpCode = http.GET();
 
   if (httpCode > 0) {  // checks for connection
